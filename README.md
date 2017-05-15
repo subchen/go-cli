@@ -134,6 +134,30 @@ app.Action = func(c *cli.Context) error {
 app.Run(os.Args)
 ```
 
+#### Bool flag
+
+A bool flag has a optional bool value.
+
+```go
+&cli.Flag{
+    Name: "verbose",
+    Usage: "output verbose information",
+    IsBool: true,
+},
+```
+
+The parsed arguments likes:
+
+```
+// valid
+--verbose
+--verbose=true
+--verbose=false
+
+// invalid
+--verbose false
+```
+
 #### Reference Variable
 
 You can set a reference variable for a flag, which will be set value after parsed.
@@ -162,18 +186,18 @@ app.Run(os.Args)
 `Flag.Value` can accept `cli.Value` interface or a pointer of base type.
 
 - **base type:**
-    - *string
-    - *bool
-    - *int, *int8, *int16, *int32, *int64
-    - *uint, *uint8, *uint16, *uint32, *uint64
-    - *flag32, *float64, 
-    - *time.Duration
-    - *net.IP, *net.IPMask, *net.IPNet
+    - `*string`
+    - `*bool`
+    - `*int`, `*int8`, `*int16`, `*int32`, `*int64`
+    - `*uint`, `*uint8`, `*uint16`, `*uint32`, `*uint64`
+    - `*flag32`, `*float64`, `
+    - `*time.Duration`
+    - `*net.IP`, `*net.IPMask`, `*net.IPNet`
 
-- **slices:**
-    - *[]string
-    - *[]int, *[]uint, *[]float64
-    - *[]net.IP, *[]net.IPNet
+- **slice:**
+    - `*[]string`
+    - `*[]int`, `*[]uint`, `*[]float64`
+    - `*[]net.IP`, `*[]net.IPNet`
 
 - **cli.Value:**
     ```go
@@ -183,13 +207,16 @@ app.Run(os.Args)
     }
     ```
 
+> Note: if you set `*bool` as `Flag.Value`, the `Flag.IsBool` will be automatically `true`.
+
+
 #### Short, Long, Alias Names
 
-You can set multiply name in a flag
+You can set multiply name in a flag, a short name, a long name, or multiple alias names.
 
 ```go
 &cli.Flag{
-    Name: "o, output",
+    Name: "o, output, output-dir",
     Usage: "A directory for output",
 }
 ```
@@ -197,7 +224,7 @@ You can set multiply name in a flag
 Then, results in help output like:
 
 ```
--o value, --output value   A directory for output
+-o value, --output value, --output-dir value   A directory for output
 ```
 
 #### Placeholder
