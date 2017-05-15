@@ -1,0 +1,414 @@
+# go-cli
+
+## Overview
+
+go-cli is a package to build a CLI application.
+
+godoc: https://godoc.org/github.com/subchen/go-cli
+
+## Installation
+
+go-cli is available using the standard go get command.
+
+To install go-cli, simply run:
+
+```bash
+go get github.com/subchen/go-cli
+```
+
+## Syntax for Command Line
+
+```
+// Long option
+--flag    // boolean flags, or flags with no option default values
+--flag x  // only on flags without a default value
+--flag=x
+
+// Short option
+-x        // boolean flags
+-x123     // value is 123
+-x=123
+-x 123
+
+// value wrapped by quote
+-x="123"
+
+// unordered in flags and arguments
+arg1 -x 123 arg2 --test arg3 arg4
+
+// stops parsing after the terminator `--`
+-x 123 -- arg1 --not-a-flag arg3 arg4
+```
+
+
+
+
+## Getting Started
+
+A command CLI application:
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "github.com/subchen/go-cli"
+)
+
+func main() {
+    app := cli.NewApp()
+    app.Name = "hello"
+    app.Version = "1.0.0"
+    app.Usage = "a hello world application."
+    app.Action = func(c *cli.Context) {
+        fmt.Println("Hello World!")
+    }  
+    app.Run(os.Args)
+}
+```
+
+Build and run our new application
+
+```bash
+$ go build
+$ ./hello
+Hello World!
+```
+
+cli also generates neat help text:
+         
+```bash
+$ ./hello --help
+NAME:
+    hello - a hello world application.
+
+USAGE:
+    hello [options] [arguments...]
+
+VERSION:
+    1.0.0
+
+OPTIONS:
+    --help     print this help
+    --version  print version information
+```
+
+### Arguments
+
+You can lookup arguments by calling the `Args` function on `cli.Context`, e.g.:
+
+```go
+app := cli.NewApp()
+
+app.Action = func(c *cli.Context) error {
+    name := c.Args()[0]
+    fmt.Printf("Hello %v\n", name)
+    return nil
+}
+
+app.Run(os.Args)
+```
+
+### Flags
+
+Setting and querying flags is simple.
+
+
+```go
+app := cli.NewApp()
+
+app.Flags = []*cli.Flag {
+    &cli.Flag{
+        Name: "name",
+        Usage: "a name of user",
+    },
+}
+  
+app.Action = func(c *cli.Context) error {
+    name := c.GetString("name")
+    fmt.Printf("Hello %v\n", name)
+    return nil
+}
+
+app.Run(os.Args)
+```
+
+#### Reference Variable
+
+You can set a reference variable for a flag, which will be set value after parsed.
+
+```go
+var name string
+
+app := cli.NewApp()
+
+app.Flags = []*cli.Flag {
+    &cli.Flag{
+        Name: "name",
+        Usage: "a name of user",
+        Value: &name,
+    },
+}
+  
+app.Action = func(c *cli.Context) error {
+    fmt.Printf("Hello %v\n", name)
+    return nil
+}
+
+app.Run(os.Args)
+```
+
+`Flag.Value` can accept `cli.Value` interface or a pointer of base type.
+
+- **base type:**
+    - *string
+    - *bool
+    - *int, *int8, *int16, *int32, *int64
+    - *uint, *uint8, *uint16, *uint32, *uint64
+    - *flag32, *float64, 
+    - *time.Duration
+    - *net.IP, *net.IPMask, *net.IPNet
+
+- **slices:**
+    - *[]string
+    - *[]int, *[]uint, *[]float64
+    - *[]net.IP, *[]net.IPNet
+
+- **cli.Value:**
+    ```go
+    type Value interface {
+        String() string
+        Set(string) error
+    }
+    ```
+
+#### Short, Long, Alias Names
+
+You can set multiply name in a flag
+
+```go
+&cli.Flag{
+    Name: "o, output",
+    Usage: "A directory for output",
+}
+```
+
+Then, results in help output like:
+
+```
+-o value, --output value   A directory for output
+```
+
+#### Placeholder
+
+Sometimes it's useful to specify a flag's value within the usage string itself. 
+
+For example this:
+
+```go
+&cli.Flag{
+    Name: "o, output",
+    Usage: "A directory for output",
+    PlaceHolder: "DIR",
+}
+```
+
+Then, results in help output like:
+
+```
+-o DIR, --output DIR   A directory for output
+```
+
+#### Default Value
+
+```go
+&cli.Flag{
+    Name: "o, output",
+    Usage: "A directory for output",
+    DefValue: "/tmp/",
+}
+```
+
+You also can set a default value got from the Environment
+
+```go
+&cli.Flag{
+    Name: "o, output",
+    Usage: "A directory for output",
+    EnvVar: "APP_OUTPUT_DIR",
+}
+```
+
+The `EnvVar` may also be given as a comma-delimited "cascade", 
+where the first environment variable that resolves is used as the default.
+
+```go
+EnvVar: "APP_OUTPUT,APP_OUTPUT_DIR",
+```
+
+### NoOptDefVal
+
+If a flag has a `NoOptDefVal` and the flag is set on the command line without an option
+the flag will be set to the `NoOptDefVal`.
+
+For example given:
+
+```go
+&cli.Flag{
+    Name: "flagname",
+    DefValue: "123",
+    NoOptDefVal: "456",
+}
+```
+
+Would result in something like
+
+| Parsed Arguments | Resulting Value |
+| -------------    | -------------   |
+| --flagname=000   | ip=000          |
+| --flagname       | ip=456          |
+| [nothing]        | ip=123          |
+
+#### Hidden flags
+
+It is possible to mark a flag as hidden, meaning it will still function as normal, 
+however will not show up in usage/help text.
+
+```go
+&cli.Flag{
+    Name: "secretFlag",
+    Hidden: true,
+}
+```
+
+### Commands
+
+Commands can be defined for a more git-like command line app.
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "strings"
+    "github.com/subchen/go-cli"
+)
+
+func main() {
+    app := cli.NewApp()
+    app.Name = "git"
+    app.Commands = []*cli.Command{
+        &cli.Command{
+            Name:    "add",
+            Usage:   "Add file contents to the index",
+            Action:  func(c *cli.Context) {
+                fmt.Println("added files: ", strings.Join(c.Args(), ", "))
+            },
+        },
+        &cli.Command{
+            Name:    "commit",
+            Usage:   "Record changes to the repository",
+            Flags:   []*cli.Flag {
+                &cli.Flag{
+                    Name: "m",
+                    Usage: "commit message",
+                },
+            },
+            Action:  func(c *cli.Context) {
+                fmt.Println("commit message: ", c.GetString("m"))
+            },
+        },
+    }
+    
+    app.Run(os.Args)
+}
+```
+
+Also, you can use sub-commands in a command.
+
+## Generate Help
+
+The default help flag (`--help`) is defined in `cli.App` and `cli.Command`.
+
+### Customization
+
+All of the help text generation may be customized.
+A help template is exposed as variable `cli.HelpTemplate`, that can be override.
+
+```go
+// Append copyright
+cli.HelpTemplate = cli.HelpTemplate + "@2017 Your company, Inc.\n\n"
+```
+
+Or, you can rewrite a help using customized func.
+
+```go
+app := cli.NewApp()
+
+app.ShowHelp = func(c *cli.HelpContext) {
+    fmt.Println("this is my help generated.")
+}
+
+app.Run(os.Args)
+```
+
+## Generate Version
+
+The default version flag (`--version`) is defined in `cli.App`.
+
+```go
+app := cli.NewApp()
+app.Name = "hello"
+app.Version = "1.0.0"
+app.BuildGitCommit = "320279c1a9a6537cdfd1e526063f6a748bb1fec3"
+app.BuildDate = "Sat May 13 19:53:08 UTC 2017"
+app.Run(os.Args)
+```
+
+Then, `hello --version` results like:
+
+```bash
+Name:       hello
+Version:    1.0.0
+Go version: go1.8.1
+Git commit: 320279c1a9a6537cdfd1e526063f6a748bb1fec3
+Built:      Sat May 13 19:53:08 UTC 2017
+OS/Arch:    darwin/amd64
+```
+
+### Customization
+
+you can rewrite version output using customized func.
+
+```go
+app := cli.NewApp()
+
+app.ShowVersion = func(app *App) {
+    fmt.Println("Version: ", app.Version)
+}
+
+app.Run(os.Args)
+```
+
+## Error Handler
+
+go-cli provides `OnCommandNotFound` func to handle a error if command/sub-command is not found.
+
+```go
+app := cli.NewApp()
+app.Flags = ...
+app.Commands = ...
+
+app.OnCommandNotFound = func(c *cli.Context, command string) {
+    ctx.ShowError(fmt.Errorf("Command not found: %s", command))
+}
+
+app.Run(os.Args)
+```
+
+## More info
+
+You can see the full reference documentation of the `go-cli` package
+at https://godoc.org/github.com/subchen/go-cli
