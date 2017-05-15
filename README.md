@@ -2,13 +2,13 @@
 
 ## Overview
 
-go-cli is a package to build a CLI application.
+`go-cli` is a package to build a CLI application. Support command/sub-commands.
 
 godoc: https://godoc.org/github.com/subchen/go-cli
 
 ## Installation
 
-go-cli is available using the standard go get command.
+`go-cli` is available using the standard go get command.
 
 To install go-cli, simply run:
 
@@ -26,12 +26,13 @@ go get github.com/subchen/go-cli
 
 // Short option
 -x        // boolean flags
--x123     // value is 123
--x=123
 -x 123
+-x=123
+-x123     // value is 123
 
 // value wrapped by quote
 -x="123"
+-x='123'
 
 // unordered in flags and arguments
 arg1 -x 123 arg2 --test arg3 arg4
@@ -41,11 +42,9 @@ arg1 -x 123 arg2 --test arg3 arg4
 ```
 
 
-
-
 ## Getting Started
 
-A command CLI application:
+A simple CLI application:
 
 ```go
 package main
@@ -68,7 +67,7 @@ func main() {
 }
 ```
 
-Build and run our new application
+Build and run our new CLI application
 
 ```bash
 $ go build
@@ -76,7 +75,7 @@ $ ./hello
 Hello World!
 ```
 
-cli also generates neat help text:
+`go-cli` also generates neat help text
          
 ```bash
 $ ./hello --help
@@ -136,7 +135,7 @@ app.Run(os.Args)
 
 #### Bool flag
 
-A bool flag has a optional bool value.
+A bool flag can has a optional inline bool value.
 
 ```go
 &cli.Flag{
@@ -158,9 +157,11 @@ The parsed arguments likes:
 --verbose false
 ```
 
-#### Reference Variable
+bool flag accepts `1,t,true,yes,on` as true, `0,f,false,no,off` as false.
 
-You can set a reference variable for a flag, which will be set value after parsed.
+#### Value bind
+
+You can bind a variable for a `Flag.Value`, which will be set after parsed.
 
 ```go
 var name string
@@ -183,7 +184,7 @@ app.Action = func(c *cli.Context) error {
 app.Run(os.Args)
 ```
 
-`Flag.Value` can accept `cli.Value` interface or a pointer of base type.
+`Flag.Value` can accept a `cli.Value` interface or a pointer of base type.
 
 - **base type:**
     - `*string`
@@ -207,7 +208,7 @@ app.Run(os.Args)
     }
     ```
 
-> Note: if you set `*bool` as `Flag.Value`, the `Flag.IsBool` will be automatically `true`.
+> Note: If you set `*bool` as `Flag.Value`, the `Flag.IsBool` will be automatically `true`.
 
 
 #### Short, Long, Alias Names
@@ -274,7 +275,7 @@ where the first environment variable that resolves is used as the default.
 EnvVar: "APP_OUTPUT,APP_OUTPUT_DIR",
 ```
 
-### NoOptDefVal
+#### NoOptDefVal
 
 If a flag has a `NoOptDefVal` and the flag is set on the command line without an option
 the flag will be set to the `NoOptDefVal`.
@@ -335,11 +336,11 @@ func main() {
             },
         },
         &cli.Command{
-            Name:    "commit",
+            Name:    "commit, co",
             Usage:   "Record changes to the repository",
             Flags:   []*cli.Flag {
                 &cli.Flag{
-                    Name: "m",
+                    Name: "m, message",
                     Usage: "commit message",
                 },
             },
@@ -355,11 +356,12 @@ func main() {
 
 Also, you can use sub-commands in a command.
 
+
 ## Generate Help
 
 The default help flag (`--help`) is defined in `cli.App` and `cli.Command`.
 
-### Customization
+### Customization help
 
 All of the help text generation may be customized.
 A help template is exposed as variable `cli.HelpTemplate`, that can be override.
@@ -405,9 +407,9 @@ Built:      Sat May 13 19:53:08 UTC 2017
 OS/Arch:    darwin/amd64
 ```
 
-### Customization
+### Customization version
 
-you can rewrite version output using customized func.
+You can rewrite version output using customized func.
 
 ```go
 app := cli.NewApp()
@@ -421,7 +423,7 @@ app.Run(os.Args)
 
 ## Error Handler
 
-go-cli provides `OnCommandNotFound` func to handle a error if command/sub-command is not found.
+`go-cli` provides `OnCommandNotFound` func to handle a error if command/sub-command is not found.
 
 ```go
 app := cli.NewApp()
