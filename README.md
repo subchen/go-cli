@@ -1,7 +1,5 @@
 # go-cli
 
-## Overview
-
 `go-cli` is a package to build a CLI application. Support command/sub-commands.
 
 godoc: https://godoc.org/github.com/subchen/go-cli
@@ -10,7 +8,7 @@ godoc: https://godoc.org/github.com/subchen/go-cli
 
 `go-cli` is available using the standard go get command.
 
-To install go-cli, simply run:
+To install `go-cli`, simply run:
 
 ```bash
 go get github.com/subchen/go-cli
@@ -329,22 +327,24 @@ func main() {
     app.Name = "git"
     app.Commands = []*cli.Command{
         &cli.Command{
-            Name:    "add",
-            Usage:   "Add file contents to the index",
-            Action:  func(c *cli.Context) {
+            Name:   "add",
+            Usage:  "Add file contents to the index",
+            Action: func(c *cli.Context) {
                 fmt.Println("added files: ", strings.Join(c.Args(), ", "))
             },
         },
         &cli.Command{
-            Name:    "commit, co",
-            Usage:   "Record changes to the repository",
-            Flags:   []*cli.Flag {
+            // alias name
+            Name:   "commit, co",
+            Usage:  "Record changes to the repository",
+            Flags:  []*cli.Flag {
                 &cli.Flag{
                     Name: "m, message",
                     Usage: "commit message",
                 },
             },
-            Action:  func(c *cli.Context) {
+            Hidden: false,
+            Action: func(c *cli.Context) {
                 fmt.Println("commit message: ", c.GetString("m"))
             },
         },
@@ -355,7 +355,6 @@ func main() {
 ```
 
 Also, you can use sub-commands in a command.
-
 
 ## Generate Help
 
@@ -431,7 +430,7 @@ app.Flags = ...
 app.Commands = ...
 
 app.OnCommandNotFound = func(c *cli.Context, command string) {
-    ctx.ShowError(fmt.Errorf("Command not found: %s", command))
+    c.ShowError(fmt.Errorf("Command not found: %s", command))
 }
 
 app.Run(os.Args)
