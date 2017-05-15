@@ -80,6 +80,13 @@ func (c *commandline) parseOneArg(i int, arguments []string) (bool, error) {
 		}
 	}
 
+	// remove quote for inline value
+	if strings.HasPrefix(valueInline, "\"") && strings.HasSuffix(valueInline, "\"") {
+		valueInline = valueInline[1:len(valueInline)-1]
+	} else if strings.HasPrefix(valueInline, "'") && strings.HasSuffix(valueInline, "'") {
+		valueInline = valueInline[1:len(valueInline)-1]
+	}
+
 	flag := lookupFlag(c.flags, name)
 	if flag == nil {
 		return false, fmt.Errorf("unrecognized option '%s'", prefix+name)
