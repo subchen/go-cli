@@ -1,8 +1,16 @@
 # go-cli
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/subchen/go-cli)](https://goreportcard.com/report/github.com/subchen/go-cli)
+[![GoDoc](https://godoc.org/github.com/subchen/go-cli?status.svg)](https://godoc.org/github.com/subchen/go-cli)
+
 `go-cli` is a package to build a CLI application. Support command/sub-commands.
 
-godoc: https://godoc.org/github.com/subchen/go-cli
+
+Following applications are built using `go-cli` including:
+
+- [frep](https://github.com/subchen/frep)
+- [mknovel](https://github.com/subchen/mknovel)
+
 
 ## Installation
 
@@ -436,7 +444,16 @@ app.OnCommandNotFound = func(c *cli.Context, command string) {
 app.Run(os.Args)
 ```
 
-## More info
 
-You can see the full reference documentation of the `go-cli` package
-at https://godoc.org/github.com/subchen/go-cli
+## Contributing
+
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create new Pull Request
+
+
+## License
+
+`go-cli` is released under the Apache 2.0 license. See [LICENSE](https://github.com/subchen/go-cli/blob/master/LICENSE)
