@@ -124,7 +124,7 @@ Setting and querying flags is simple.
 app := cli.NewApp()
 
 app.Flags = []*cli.Flag {
-    &cli.Flag{
+    {
         Name: "name",
         Usage: "a name of user",
     },
@@ -175,7 +175,7 @@ var name string
 app := cli.NewApp()
 
 app.Flags = []*cli.Flag {
-    &cli.Flag{
+    {
         Name: "name",
         Usage: "a name of user",
         Value: &name,
@@ -335,19 +335,19 @@ func main() {
     app := cli.NewApp()
     app.Name = "git"
     app.Commands = []*cli.Command{
-        &cli.Command{
+        {
             Name:   "add",
             Usage:  "Add file contents to the index",
             Action: func(c *cli.Context) {
                 fmt.Println("added files: ", strings.Join(c.Args(), ", "))
             },
         },
-        &cli.Command{
+        {
             // alias name
             Name:   "commit, co",
             Usage:  "Record changes to the repository",
             Flags:  []*cli.Flag {
-                &cli.Flag{
+                {
                     Name: "m, message",
                     Usage: "commit message",
                 },
