@@ -6,7 +6,7 @@
 `go-cli` is a package to build a CLI application. Support command/sub-commands.
 
 
-Following applications are built using `go-cli` including:
+Some applications are built using `go-cli` including:
 
 - [frep](https://github.com/subchen/frep)
 - [mknovel](https://github.com/subchen/mknovel)
@@ -197,11 +197,11 @@ app.Run(os.Args)
     - `*bool`
     - `*int`, `*int8`, `*int16`, `*int32`, `*int64`
     - `*uint`, `*uint8`, `*uint16`, `*uint32`, `*uint64`
-    - `*flag32`, `*float64`, `
+    - `*float32`, `*float64`
     - `*time.Duration`
     - `*net.IP`, `*net.IPMask`, `*net.IPNet`
 
-- **slice:**
+- **slice of base type:**
     - `*[]string`
     - `*[]int`, `*[]uint`, `*[]float64`
     - `*[]net.IP`, `*[]net.IPNet`
@@ -293,6 +293,7 @@ For example given:
     Name: "flagname",
     DefValue: "123",
     NoOptDefVal: "456",
+    Value: &val
 }
 ```
 
@@ -300,9 +301,9 @@ Would result in something like
 
 | Parsed Arguments | Resulting Value |
 | -------------    | -------------   |
-| --flagname=000   | ip=000          |
-| --flagname       | ip=456          |
-| [nothing]        | ip=123          |
+| --flagname=000   | val=000         |
+| --flagname       | val=456         |
+| [nothing]        | val=123         |
 
 #### Hidden flags
 
@@ -368,7 +369,7 @@ Also, you can use sub-commands in a command.
 
 The default help flag (`--help`) is defined in `cli.App` and `cli.Command`.
 
-### Customization help
+### Customize help
 
 All of the help text generation may be customized.
 A help template is exposed as variable `cli.HelpTemplate`, that can be override.
@@ -414,7 +415,7 @@ Built:      Sat May 13 19:53:08 UTC 2017
 OS/Arch:    darwin/amd64
 ```
 
-### Customization version
+### Customize version
 
 You can rewrite version output using customized func.
 
