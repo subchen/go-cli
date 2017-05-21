@@ -244,7 +244,7 @@ For example this:
 &cli.Flag{
     Name: "o, output",
     Usage: "A directory for output",
-    PlaceHolder: "DIR",
+    Placeholder: "DIR",
 }
 ```
 
