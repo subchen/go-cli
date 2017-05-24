@@ -198,13 +198,15 @@ app.Run(os.Args)
     - `*int`, `*int8`, `*int16`, `*int32`, `*int64`
     - `*uint`, `*uint8`, `*uint16`, `*uint32`, `*uint64`
     - `*float32`, `*float64`
-    - `*time.Duration`
+    - `*time.Time`, `*time.Duration`, `*time.Location`
     - `*net.IP`, `*net.IPMask`, `*net.IPNet`
+    - `*url.URL`
 
 - **slice of base type:**
     - `*[]string`
     - `*[]int`, `*[]uint`, `*[]float64`
     - `*[]net.IP`, `*[]net.IPNet`
+    - `*[]url.URL`
 
 - **cli.Value:**
     ```go
