@@ -223,14 +223,14 @@ func makeFlagLabel(f *Flag) string {
 
 	labels := make([]string, 0, len(names))
 	for _, name := range names {
-		label := "-" + name + value
+		label := "-" + name
 		if len(name) > 1 {
 			label = "-" + label
 		}
 		labels = append(labels, label)
 	}
 
-	return strings.Join(labels, ", ")
+	return strings.Join(labels, ", ") + value
 }
 
 func makeCommandLabel(c *Command) string {

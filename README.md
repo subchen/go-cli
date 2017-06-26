@@ -233,12 +233,12 @@ You can set multiply name in a flag, a short name, a long name, or multiple alia
 Then, results in help output like:
 
 ```
--o value, --output value, --output-dir value   A directory for output
+-o, --output, --output-dir value   A directory for output
 ```
 
 #### Placeholder
 
-Sometimes it's useful to specify a flag's value within the usage string itself. 
+Sometimes it's useful to specify a flag's value within the usage string itself.
 
 For example this:
 
@@ -360,7 +360,7 @@ func main() {
             },
         },
     }
-    
+
     app.Run(os.Args)
 }
 ```
@@ -460,3 +460,4 @@ app.Run(os.Args)
 ## License
 
 `go-cli` is released under the Apache 2.0 license. See [LICENSE](https://github.com/subchen/go-cli/blob/master/LICENSE)
+
