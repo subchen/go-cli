@@ -32,9 +32,6 @@ func (c *commandline) parse(arguments []string) (err error) {
 				c.args = append(c.args, arg)
 			} else {
 				c.command = lookupCommand(c.commands, arg)
-				if c.command == nil {
-					return fmt.Errorf("unrecognized command '%s'", arg)
-				}
 				c.args = append(c.args, arguments[i:]...)
 				break
 			}

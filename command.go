@@ -98,7 +98,7 @@ func (c *Command) Run(ctx *Context) {
 	}
 
 	// command not found
-	if cli.commands == nil && len(c.Commands) > 0 && len(cli.args) > 0 {
+	if cli.command == nil && len(c.Commands) > 0 && len(cli.args) > 0 {
 		cmd := cli.args[0]
 		if c.OnCommandNotFound != nil {
 			c.OnCommandNotFound(newCtx, cmd)

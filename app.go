@@ -118,7 +118,7 @@ func (a *App) Run(arguments []string) {
 	}
 
 	// command not found
-	if cli.commands == nil && len(a.Commands) > 0 && len(cli.args) > 0 {
+	if cli.command == nil && len(a.Commands) > 0 && len(cli.args) > 0 {
 		cmd := cli.args[0]
 		if a.OnCommandNotFound != nil {
 			a.OnCommandNotFound(newCtx, cmd)
