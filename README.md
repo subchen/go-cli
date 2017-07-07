@@ -68,7 +68,7 @@ func main() {
     app.Usage = "a hello world application."
     app.Action = func(c *cli.Context) {
         fmt.Println("Hello World!")
-    }  
+    }
     app.Run(os.Args)
 }
 ```
@@ -82,7 +82,7 @@ Hello World!
 ```
 
 `go-cli` also generates neat help text
-         
+
 ```bash
 $ ./hello --help
 NAME:
@@ -129,7 +129,7 @@ app.Flags = []*cli.Flag {
         Usage: "a name of user",
     },
 }
-  
+
 app.Action = func(c *cli.Context) error {
     name := c.GetString("name")
     fmt.Printf("Hello %v\n", name)
@@ -181,7 +181,7 @@ app.Flags = []*cli.Flag {
         Value: &name,
     },
 }
-  
+
 app.Action = func(c *cli.Context) error {
     fmt.Printf("Hello %v\n", name)
     return nil
