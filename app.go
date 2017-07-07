@@ -87,11 +87,11 @@ func (a *App) Run(arguments []string) {
 	a.initialize()
 
 	// parse cli arguments
-	cli := &commandline{
+	cl := &commandline{
 		flags:    a.Flags,
 		commands: a.Commands,
 	}
-	err := cli.parse(arguments[1:])
+	err := cl.parse(arguments[1:])
 
 	// build context
 	newCtx := &Context{
@@ -99,7 +99,7 @@ func (a *App) Run(arguments []string) {
 		app:      a,
 		flags:    a.Flags,
 		commands: a.Commands,
-		args:     cli.args,
+		args:     cl.args,
 	}
 
 	if err != nil {
@@ -118,8 +118,8 @@ func (a *App) Run(arguments []string) {
 	}
 
 	// command not found
-	if cli.command == nil && len(a.Commands) > 0 && len(cli.args) > 0 {
-		cmd := cli.args[0]
+	if cl.command == nil && len(a.Commands) > 0 && len(cl.args) > 0 {
+		cmd := cl.args[0]
 		if a.OnCommandNotFound != nil {
 			a.OnCommandNotFound(newCtx, cmd)
 		} else {
@@ -128,8 +128,8 @@ func (a *App) Run(arguments []string) {
 	}
 
 	// run command
-	if cli.command != nil {
-		cli.command.Run(newCtx)
+	if cl.command != nil {
+		cl.command.Run(newCtx)
 		return
 	}
 
