@@ -106,10 +106,9 @@ You can lookup arguments by calling the `Args` function on `cli.Context`, e.g.:
 ```go
 app := cli.NewApp()
 
-app.Action = func(c *cli.Context) error {
+app.Action = func(c *cli.Context) {
     name := c.Args()[0]
     fmt.Printf("Hello %v\n", name)
-    return nil
 }
 
 app.Run(os.Args)
@@ -130,10 +129,9 @@ app.Flags = []*cli.Flag {
     },
 }
 
-app.Action = func(c *cli.Context) error {
+app.Action = func(c *cli.Context) {
     name := c.GetString("name")
     fmt.Printf("Hello %v\n", name)
-    return nil
 }
 
 app.Run(os.Args)
@@ -182,9 +180,8 @@ app.Flags = []*cli.Flag {
     },
 }
 
-app.Action = func(c *cli.Context) error {
+app.Action = func(c *cli.Context) {
     fmt.Printf("Hello %v\n", name)
-    return nil
 }
 
 app.Run(os.Args)
