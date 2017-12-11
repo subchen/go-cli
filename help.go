@@ -154,6 +154,7 @@ func (c *HelpContext) AuthorLines() []string {
 }
 
 func (c *HelpContext) ExampleLines() []string {
+	c.Examples = strings.TrimSpace(c.Examples)
 	if len(c.Examples) == 0 {
 		return nil
 	}
