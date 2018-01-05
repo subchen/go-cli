@@ -194,6 +194,9 @@ outer:
 		if f.DefValue != "" {
 			usage = usage + " (default: " + f.DefValue + ")"
 		}
+		if f.EnvVar != "" {
+			usage = usage + " (Env: " + f.EnvVar + ")"
+		}
 		line := fmt.Sprintf("%s%s   %s", label, whitespaces, usage)
 		usageLines = append(usageLines, line)
 	}
