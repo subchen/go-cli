@@ -10,6 +10,7 @@ Some applications are built using `go-cli` including:
 
 - [frep](https://github.com/subchen/frep)
 - [mknovel](https://github.com/subchen/mknovel)
+- [ovfenv-installer](https://github.com/subchen/ovfenv-installer)
 
 
 ## Installation
