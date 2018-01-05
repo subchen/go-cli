@@ -35,9 +35,6 @@ type App struct {
 	HiddenHelp    bool
 	HiddenVersion bool
 
-	// Align long flags in usage help
-	FlagsAlign bool
-
 	// Display full help
 	ShowHelp func(*HelpContext)
 	// Display full version
@@ -55,7 +52,6 @@ func NewApp() *App {
 		Name:        filepath.Base(os.Args[0]),
 		Usage:       "A new cli application",
 		Version:     "0.0.0",
-		FlagsAlign:  true,
 		ShowHelp:    showHelp,
 		ShowVersion: showVersion,
 	}
