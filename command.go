@@ -114,6 +114,7 @@ func (c *Command) Run(ctx *Context) {
 	}
 
 	if c.Action != nil {
+		defer handleWhenPanic()
 		c.Action(newCtx)
 	} else {
 		newCtx.ShowHelp()

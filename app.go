@@ -130,6 +130,7 @@ func (a *App) Run(arguments []string) {
 	}
 
 	if a.Action != nil {
+		defer handleWhenPanic()
 		a.Action(newCtx)
 	} else {
 		newCtx.ShowHelp()

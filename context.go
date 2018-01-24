@@ -228,3 +228,11 @@ func (c *Context) ShowError(err error) {
 	fmt.Fprintln(w, fmt.Sprintf("\nRun '%s --help' for more information", c.name))
 	os.Exit(1)
 }
+
+// handleWhenPanic will be call before user action
+func handleWhenPanic() {
+	if err := recover(); err != nil {
+		os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
+		os.Exit(1)
+	}
+}
