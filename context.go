@@ -229,10 +229,17 @@ func (c *Context) ShowError(err error) {
 	os.Exit(1)
 }
 
-// handleWhenPanic will be call before user action
-func handleWhenPanic() {
-	if err := recover(); err != nil {
-		os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
+func (c *Context) actionPanicHandler() {
+	if e := recover(); e != nil {
+		if c.app.ActionPanicHandler != nil {
+			err, ok := e.(error)
+			if !ok {
+				err := fmt.Errorf("%v", e)
+			}
+			c.app.ActionPanicHandler(c, err)
+		} else {
+			os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
+		}
 		os.Exit(1)
 	}
 }
