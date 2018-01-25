@@ -431,6 +431,8 @@ app.Run(os.Args)
 
 ## Error Handler
 
+### OnCommandNotFound
+
 `go-cli` provides `OnCommandNotFound` func to handle a error if command/sub-command is not found.
 
 ```go
@@ -445,6 +447,23 @@ app.OnCommandNotFound = func(c *cli.Context, command string) {
 app.Run(os.Args)
 ```
 
+### ActionPanicHandler
+
+`go-cli` provides `ActionPanicHandler` func to handle an error if panic in action.
+
+```go
+app := cli.NewApp()
+app.Flags = ...
+app.Commands = ...
+
+app.ActionPanicHandler = func(c *cli.Context, err error) {
+    os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
+}
+
+app.Run(os.Args)
+```
+
+> Notes: `go-cli` will only output error message without golang error stacks if ActionPanicHandler is nil.
 
 ## Contributing
 
