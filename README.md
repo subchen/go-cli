@@ -12,6 +12,31 @@ Some applications are built using `go-cli` including:
 - [mknovel](https://github.com/subchen/mknovel)
 - [ovfenv-installer](https://github.com/subchen/ovfenv-installer)
 
+Contents
+
+- [Installation](#overview)
+- [Syntax for Command Line](#syntax-for-command-line)
+- [Getting Started](#getting-started)
+  * [Arguments](#arguments)
+  * [Flags](#flags)
+    + [Bool flag](#bool-flag)
+    + [Value bind](#value-bind)
+    + [Short, Long, Alias Names](#short-long-alias-names)
+    + [Placeholder](#placeholder)
+    + [Default Value](#default-value)
+    + [NoOptDefVal](#nooptdefval)
+    + [Hidden flags](#hidden-flags)
+  * [Commands](#commands)
+- [Generate Help](#generate-help)
+  * [Customize help](#customize-help)
+- [Generate Version](#generate-version)
+  * [Customize version](#customize-version)
+- [Error Handler](#error-handler)
+  * [OnCommandNotFound](#oncommandnotfound)
+  * [ActionPanicHandler](#actionpanichandler)
+- [Contributing](#contributing)
+- [License](#license)
+
 
 ## Installation
 
