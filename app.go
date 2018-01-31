@@ -47,7 +47,7 @@ type App struct {
 	OnCommandNotFound func(*Context, string)
 
 	// Handler if panic in app.Action() and command.Action()
-	ActionPanicHandler func()
+	ActionPanicHandler func(c *Context, err error)
 }
 
 func NewApp() *App {

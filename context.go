@@ -234,11 +234,11 @@ func (c *Context) actionPanicHandler() {
 		if c.app.ActionPanicHandler != nil {
 			err, ok := e.(error)
 			if !ok {
-				err := fmt.Errorf("%v", e)
+				err = fmt.Errorf("%v", e)
 			}
 			c.app.ActionPanicHandler(c, err)
 		} else {
-			os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
+			os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", e))
 		}
 		os.Exit(1)
 	}
