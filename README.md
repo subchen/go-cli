@@ -12,7 +12,7 @@ Some applications are built using `go-cli` including:
 - [mknovel](https://github.com/subchen/mknovel)
 - [ovfenv-installer](https://github.com/subchen/ovfenv-installer)
 
-Contents
+Table of Contents
 
 - [Installation](#overview)
 - [Syntax for Command Line](#syntax-for-command-line)
