@@ -110,6 +110,7 @@ func (f *Flag) initialize() {
 	}
 
 	for _, name := range strings.Split(f.EnvVar, ",") {
+		name = strings.TrimSpace(name)
 		if value, ok := os.LookupEnv(name); ok {
 			f.wrapValue.Set(value)
 			f.Visited = true
