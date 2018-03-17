@@ -210,6 +210,10 @@ func (c *Context) NArg() int {
 	return len(c.args)
 }
 
+func (c *Context) ArgGet(n int) string {
+	return c.args[n]
+}
+
 func (c *Context) Args() []string {
 	return c.args
 }
@@ -220,6 +224,11 @@ func (c *Context) ShowHelp() {
 	} else {
 		c.app.ShowHelp(newAppHelpContext(c.name, c.app))
 	}
+}
+
+func (c *Context) ShowHelpAndExit(code int) {
+	c.ShowHelp()
+	os.Exit(code)
 }
 
 func (c *Context) ShowError(err error) {
