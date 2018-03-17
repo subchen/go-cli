@@ -1,7 +1,9 @@
 # go-cli
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/subchen/go-cli)](https://goreportcard.com/report/github.com/subchen/go-cli)
+[![Build Status](https://travis-ci.org/subchen/go-cli.svg?branch=master)](https://travis-ci.org/subchen/go-cli)
 [![GoDoc](https://godoc.org/github.com/subchen/go-cli?status.svg)](https://godoc.org/github.com/subchen/go-cli)
+[![Go Report Card](https://goreportcard.com/badge/github.com/subchen/go-cli)](https://goreportcard.com/report/github.com/subchen/go-cli)
+[![License](http://img.shields.io/badge/License-Apache_2-red.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 `go-cli` is a package to build a CLI application. Support command/sub-commands.
 
@@ -11,6 +13,7 @@ Some applications are built using `go-cli` including:
 - [frep](https://github.com/subchen/frep)
 - [mknovel](https://github.com/subchen/mknovel)
 - [ovfenv-installer](https://github.com/subchen/ovfenv-installer)
+- [publish-toolset](https://github.com/subchen/publish-toolset)
 
 Table of Contents
 
