@@ -210,7 +210,7 @@ func (c *Context) NArg() int {
 	return len(c.args)
 }
 
-func (c *Context) ArgGet(n int) string {
+func (c *Context) Arg(n int) string {
 	return c.args[n]
 }
 
