@@ -42,7 +42,7 @@ func (c *Context) Global() *Context {
 func (c *Context) IsSet(name string) bool {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
-		return f.Visited
+		return f.visited
 	}
 	return false
 }
