@@ -107,8 +107,7 @@ func (a *App) Run(arguments []string) {
 
 	// show --help
 	if newCtx.GetBool("help") {
-		newCtx.ShowHelp()
-		os.Exit(0)
+		newCtx.ShowHelpAndExit(0)
 	}
 	// show --version
 	if newCtx.GetBool("version") {
@@ -136,7 +135,6 @@ func (a *App) Run(arguments []string) {
 		defer newCtx.actionPanicHandler()
 		a.Action(newCtx)
 	} else {
-		newCtx.ShowHelp()
-		os.Exit(0)
+		newCtx.ShowHelpAndExit(0)
 	}
 }
