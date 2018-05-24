@@ -238,14 +238,14 @@ func (c *Context) ShowError(err error) {
 	os.Exit(1)
 }
 
-func (c *Context) actionPanicHandler() {
+func (c *Context) handlePanic() {
 	if e := recover(); e != nil {
-		if c.app.ActionPanicHandler != nil {
+		if c.app.OnActionPanic != nil {
 			err, ok := e.(error)
 			if !ok {
 				err = fmt.Errorf("%v", e)
 			}
-			c.app.ActionPanicHandler(c, err)
+			c.app.OnActionPanic(c, err)
 		} else {
 			os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", e))
 		}

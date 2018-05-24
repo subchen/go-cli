@@ -38,7 +38,7 @@ Some applications are built using `go-cli` including:
   * [Customize version](#customize-version)
 - [Error Handler](#error-handler)
   * [OnCommandNotFound](#oncommandnotfound)
-  * [ActionPanicHandler](#actionpanichandler)
+  * [OnActionPanic](#onactionpanic)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -483,23 +483,23 @@ app.OnCommandNotFound = func(c *cli.Context, command string) {
 app.Run(os.Args)
 ```
 
-### ActionPanicHandler
+### OnActionPanic
 
-`go-cli` provides `ActionPanicHandler` func to handle an error if panic in action.
+`go-cli` provides `OnActionPanic` func to handle an error if panic in action.
 
 ```go
 app := cli.NewApp()
 app.Flags = ...
 app.Commands = ...
 
-app.ActionPanicHandler = func(c *cli.Context, err error) {
+app.OnActionPanic = func(c *cli.Context, err error) {
     os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", err))
 }
 
 app.Run(os.Args)
 ```
 
-> Notes: `go-cli` will only output error message without golang error stacks if ActionPanicHandler is nil.
+> Notes: `go-cli` will only output error message without golang error stacks if app.OnActionPanic is nil.
 
 ## Contributing
 
