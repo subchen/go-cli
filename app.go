@@ -125,6 +125,7 @@ func (a *App) Run(arguments []string) {
 		} else {
 			newCtx.ShowError(fmt.Errorf("no such command: %s", cmd))
 		}
+		return
 	}
 
 	// run command

@@ -105,6 +105,7 @@ func (c *Command) Run(ctx *Context) {
 		} else {
 			newCtx.ShowError(fmt.Errorf("no such command: %s", cmd))
 		}
+		return
 	}
 
 	// run command
