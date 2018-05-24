@@ -129,8 +129,10 @@ func (c *Command) Names() []string {
 
 func lookupCommand(commands []*Command, name string) *Command {
 	for _, c := range commands {
-		if c.Name == name {
-			return c
+		for _, n := range c.Names() {
+			if n == name {
+				return c
+			}
 		}
 	}
 	return nil
