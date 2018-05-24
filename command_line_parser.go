@@ -6,9 +6,11 @@ import (
 )
 
 type commandline struct {
+	// defined
 	flags    []*Flag
 	commands []*Command
 
+	// parsed results
 	command *Command
 	args    []string
 }
