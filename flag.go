@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// Flag represents the state of a flag
 type Flag struct {
 	Name        string // name as it appears on command line
 	Usage       string // help message
@@ -129,6 +130,7 @@ func (f *Flag) initialize() {
 	f.visited = false // reset
 }
 
+// Names returns the names including short names and aliases
 func (f *Flag) Names() []string {
 	names := strings.Split(f.Name, ",")
 	for i, name := range names {
@@ -137,11 +139,13 @@ func (f *Flag) Names() []string {
 	return names
 }
 
+// Set sets the value of the named flag
 func (f *Flag) SetValue(value string) error {
 	f.visited = true
 	return f.wrapValue.Set(value)
 }
 
+// GetValue returns the string value of flag
 func (f *Flag) GetValue() string {
 	return f.wrapValue.String()
 }

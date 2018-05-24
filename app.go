@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// App is the main structure of a cli application
 type App struct {
 	// The name of the program. Defaults to path.Base(os.Args[0])
 	Name string
@@ -49,6 +50,7 @@ type App struct {
 	OnActionPanic func(c *Context, err error)
 }
 
+// NewApp creates a new cli Application
 func NewApp() *App {
 	return &App{
 		Name:        filepath.Base(os.Args[0]),
@@ -81,6 +83,7 @@ func (a *App) initialize() {
 	}
 }
 
+// Run is the entry point to the cli app, parse argument and call Execute() or command.Execute()
 func (a *App) Run(arguments []string) {
 	a.initialize()
 

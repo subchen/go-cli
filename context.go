@@ -21,14 +21,17 @@ type Context struct {
 	parent   *Context
 }
 
+// Name returns app/command full name
 func (c *Context) Name() string {
 	return c.name
 }
 
+// Parent returns parent context if exists
 func (c *Context) Parent() *Context {
 	return c.parent
 }
 
+// Parent returns top context if exists
 func (c *Context) Global() *Context {
 	ctx := c
 	for {
@@ -39,6 +42,7 @@ func (c *Context) Global() *Context {
 	}
 }
 
+// IsSet returns flag is visited in cli args
 func (c *Context) IsSet(name string) bool {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -47,6 +51,7 @@ func (c *Context) IsSet(name string) bool {
 	return false
 }
 
+// GetString returns flag value as string
 func (c *Context) GetString(name string) string {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -55,6 +60,7 @@ func (c *Context) GetString(name string) string {
 	return ""
 }
 
+// GetStringSlice returns flag value as string slice
 func (c *Context) GetStringSlice(name string) []string {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -63,6 +69,7 @@ func (c *Context) GetStringSlice(name string) []string {
 	return nil
 }
 
+// GetBool returns flag value as bool
 func (c *Context) GetBool(name string) bool {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -74,6 +81,7 @@ func (c *Context) GetBool(name string) bool {
 	return false
 }
 
+// GetBool returns flag value as bool
 func (c *Context) GetInt(name string) int {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -85,6 +93,7 @@ func (c *Context) GetInt(name string) int {
 	return 0
 }
 
+// GetInt8 returns flag value as int8
 func (c *Context) GetInt8(name string) int8 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -96,6 +105,7 @@ func (c *Context) GetInt8(name string) int8 {
 	return 0
 }
 
+// GetInt16 returns flag value as int16
 func (c *Context) GetInt16(name string) int16 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -107,6 +117,7 @@ func (c *Context) GetInt16(name string) int16 {
 	return 0
 }
 
+// GetInt32 returns flag value as int32
 func (c *Context) GetInt32(name string) int32 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -118,6 +129,7 @@ func (c *Context) GetInt32(name string) int32 {
 	return 0
 }
 
+// GetInt64 returns flag value as int64
 func (c *Context) GetInt64(name string) int64 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -129,6 +141,7 @@ func (c *Context) GetInt64(name string) int64 {
 	return 0
 }
 
+// GetUint returns flag value as uint
 func (c *Context) GetUint(name string) uint {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -140,6 +153,7 @@ func (c *Context) GetUint(name string) uint {
 	return 0
 }
 
+// GetUint8 returns flag value as uint8
 func (c *Context) GetUint8(name string) uint8 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -151,6 +165,7 @@ func (c *Context) GetUint8(name string) uint8 {
 	return 0
 }
 
+// GetBool returns flag value as bool
 func (c *Context) GetUint16(name string) uint16 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -162,6 +177,7 @@ func (c *Context) GetUint16(name string) uint16 {
 	return 0
 }
 
+// GetUint32 returns flag value as uint32
 func (c *Context) GetUint32(name string) uint32 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -173,6 +189,7 @@ func (c *Context) GetUint32(name string) uint32 {
 	return 0
 }
 
+// GetBool returns flag value as bool
 func (c *Context) GetUint64(name string) uint64 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -184,6 +201,7 @@ func (c *Context) GetUint64(name string) uint64 {
 	return 0
 }
 
+// GetFloat32 returns flag value as float32
 func (c *Context) GetFloat32(name string) float32 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -195,6 +213,7 @@ func (c *Context) GetFloat32(name string) float32 {
 	return 0
 }
 
+// GetFloat64 returns flag value as float64
 func (c *Context) GetFloat64(name string) float64 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -206,18 +225,22 @@ func (c *Context) GetFloat64(name string) float64 {
 	return 0
 }
 
+// NArg returns number of non-flag arguments
 func (c *Context) NArg() int {
 	return len(c.args)
 }
 
+// Arg returns the i'th non-flag argument
 func (c *Context) Arg(n int) string {
 	return c.args[n]
 }
 
+// Args returns the non-flag arguments.
 func (c *Context) Args() []string {
 	return c.args
 }
 
+// ShowHelp shows help and
 func (c *Context) ShowHelp() {
 	if c.command != nil {
 		c.command.ShowHelp(newCommandHelpContext(c.name, c.command, c.app))
@@ -226,11 +249,13 @@ func (c *Context) ShowHelp() {
 	}
 }
 
+// ShowHelpAndExit shows help and exit
 func (c *Context) ShowHelpAndExit(code int) {
 	c.ShowHelp()
 	os.Exit(code)
 }
 
+// ShowError shows error and exit(1)
 func (c *Context) ShowError(err error) {
 	w := os.Stderr
 	fmt.Fprintln(w, err)

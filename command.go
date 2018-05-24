@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Command is a subcommand for a cli.App
 type Command struct {
 	// The name of the program. Defaults to path.Base(os.Args[0])
 	Name string
@@ -56,6 +57,7 @@ func (c *Command) initialize() {
 	}
 }
 
+// Run is the entry point to the command, parse argument and call Execute() or subcommand.Execute()
 func (c *Command) Run(ctx *Context) {
 	c.initialize()
 
@@ -119,6 +121,7 @@ func (c *Command) Run(ctx *Context) {
 	}
 }
 
+// Names returns the names including short names and aliases
 func (c *Command) Names() []string {
 	names := strings.Split(c.Name, ",")
 	for i, name := range names {

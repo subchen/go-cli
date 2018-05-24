@@ -8,8 +8,8 @@ import (
 	"text/template"
 )
 
-// AppHelpTemplate is the text template for the Default help topic.
-// cli.go uses text/template to render templates. You can
+// HelpTemplate is the text template for the Default help topic.
+// go-cli uses text/template to render templates. You can
 // render custom help text by setting this variable.
 var HelpTemplate = `NAME:
    {{.Name}}{{if .Usage}} - {{.Usage}}{{end}}
@@ -49,6 +49,7 @@ Run '{{.Name}} COMMAND --help' for more information on a command.{{end}}
 
 `
 
+// HelpContext is a struct for output help
 type HelpContext struct {
 	Name        string
 	Version     string
@@ -87,10 +88,12 @@ func newCommandHelpContext(name string, cmd *Command, app *App) *HelpContext {
 	}
 }
 
+// Level return command/subcommand's level
 func (c *HelpContext) Level() int {
 	return strings.Count(c.Name, " ")
 }
 
+// VisibleFlags returns flags which are visible
 func (c *HelpContext) VisibleFlags() []*Flag {
 	flags := make([]*Flag, 0, len(c.Flags))
 	for _, f := range c.Flags {
@@ -101,6 +104,7 @@ func (c *HelpContext) VisibleFlags() []*Flag {
 	return flags
 }
 
+// VisibleCommands returns commands which are visible
 func (c *HelpContext) VisibleCommands() []*Command {
 	commands := make([]*Command, 0, len(c.Commands))
 	for _, c := range c.Commands {
@@ -111,6 +115,7 @@ func (c *HelpContext) VisibleCommands() []*Command {
 	return commands
 }
 
+// UsageTextLines splits line for usage
 func (c *HelpContext) UsageTextLines() []string {
 	if len(c.UsageText) == 0 {
 		usage := ""
@@ -139,6 +144,7 @@ func (c *HelpContext) UsageTextLines() []string {
 	return usages
 }
 
+// AuthorLines splits line for authors
 func (c *HelpContext) AuthorLines() []string {
 	if len(c.Authors) == 0 {
 		return nil
@@ -150,6 +156,7 @@ func (c *HelpContext) AuthorLines() []string {
 	return authors
 }
 
+// ExampleLines splits line for examples
 func (c *HelpContext) ExampleLines() []string {
 	c.Examples = strings.TrimSpace(c.Examples)
 	if len(c.Examples) == 0 {
@@ -162,6 +169,7 @@ func (c *HelpContext) ExampleLines() []string {
 	return examples
 }
 
+// VisibleFlagsUsageLines splits line for flags
 func (c *HelpContext) VisibleFlagsUsageLines() []string {
 	flags := c.VisibleFlags()
 
@@ -203,6 +211,7 @@ outer:
 	return usageLines
 }
 
+// VisibleCommandsUsageLines splits line for commands
 func (c *HelpContext) VisibleCommandsUsageLines() []string {
 	// calc max width for command name
 	max := 0
