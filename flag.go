@@ -48,6 +48,8 @@ func (f *Flag) initialize() {
 			f.wrapValue = val
 		case *int:
 			f.wrapValue = &intValue{val}
+		case *[]int:
+			f.wrapValue = &intSliceValue{val}
 		case *int8:
 			f.wrapValue = &int8Value{val}
 		case *int16:
@@ -58,6 +60,8 @@ func (f *Flag) initialize() {
 			f.wrapValue = &int64Value{val}
 		case *uint:
 			f.wrapValue = &uintValue{val}
+		case *[]uint:
+			f.wrapValue = &uintSliceValue{val}
 		case *uint8:
 			f.wrapValue = &uint8Value{val}
 		case *uint16:
@@ -70,6 +74,8 @@ func (f *Flag) initialize() {
 			f.wrapValue = &float32Value{val}
 		case *float64:
 			f.wrapValue = &float64Value{val}
+		case *[]float64:
+			f.wrapValue = &float64SliceValue{val}
 		case *time.Time:
 			f.wrapValue = &timeValue{val}
 		case *time.Duration:
