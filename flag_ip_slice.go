@@ -12,7 +12,7 @@ type ipSliceValue struct {
 
 func (v *ipSliceValue) Set(value string) error {
 	val := net.ParseIP(value)
-	if val != nil {
+	if val == nil {
 		return fmt.Errorf("invalid ip: " + value)
 	}
 

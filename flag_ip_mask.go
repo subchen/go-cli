@@ -11,7 +11,7 @@ type ipMaskValue struct {
 
 func (v *ipMaskValue) Set(value string) error {
 	val := parseIPv4Mask(value)
-	if val != nil {
+	if val == nil {
 		return fmt.Errorf("invalid ip mask: " + value)
 	}
 
