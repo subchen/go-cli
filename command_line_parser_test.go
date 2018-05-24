@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"net"
 	"reflect"
 	"testing"
 )
@@ -14,6 +15,8 @@ func TestCommandlineParse(t *testing.T) {
 		oString     string
 		oStringList []string
 		oIntList    []int
+		oNetIP      net.IP
+		oNetIPMask  net.IPMask
 	)
 
 	cl := &commandline{
@@ -25,6 +28,8 @@ func TestCommandlineParse(t *testing.T) {
 			{Name: "s", Value: &oString},
 			{Name: "string-list", Value: &oStringList},
 			{Name: "int-list", Value: &oIntList},
+			{Name: "ip", Value: &oNetIP},
+			{Name: "ipmask", Value: &oNetIPMask},
 		},
 	}
 
@@ -43,6 +48,8 @@ func TestCommandlineParse(t *testing.T) {
 		"--string-list", "b",
 		"--int-list=0",
 		"--int-list", "1",
+		"--ip=127.0.0.1",
+		"--ipmask=255.255.0.0",
 	}
 	err := cl.parse(args)
 	if err != nil {
@@ -69,5 +76,11 @@ func TestCommandlineParse(t *testing.T) {
 	}
 	if !reflect.DeepEqual(oIntList, []int{0, 1}) {
 		t.Error("flag int list value is wrong:", oIntList)
+	}
+	if oNetIP.String() != "127.0.0.1" {
+		t.Error("flag net.ip value is wrong:", oNetIP.String())
+	}
+	if oNetIPMask.String() != "ffff0000" {
+		t.Error("flag net.ipmask value is wrong:", oNetIPMask.String())
 	}
 }
