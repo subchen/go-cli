@@ -43,9 +43,6 @@ func (f *Flag) initialize() {
 			f.wrapValue = &stringValue{val}
 		case *[]string:
 			f.wrapValue = &stringSliceValue{val}
-		case *boolValue:
-			f.IsBool = true
-			f.wrapValue = val
 		case *int:
 			f.wrapValue = &intValue{val}
 		case *[]int:
@@ -115,16 +112,17 @@ func (f *Flag) initialize() {
 		f.Placeholder = "value"
 	}
 
+	envSet := false
 	for _, name := range strings.Split(f.EnvVar, ",") {
 		name = strings.TrimSpace(name)
 		if value, ok := os.LookupEnv(name); ok {
 			f.wrapValue.Set(value)
-			f.visited = true
+			envSet = true
 			break
 		}
 	}
 
-	if !f.visited && f.DefValue != "" {
+	if !envSet && f.DefValue != "" {
 		f.wrapValue.Set(f.DefValue)
 	}
 
