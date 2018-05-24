@@ -1,7 +1,8 @@
 # go-cli
 
-[![Build Status](https://travis-ci.org/subchen/go-cli.svg?branch=master)](https://travis-ci.org/subchen/go-cli)
 [![GoDoc](https://godoc.org/github.com/subchen/go-cli?status.svg)](https://godoc.org/github.com/subchen/go-cli)
+[![Build Status](https://travis-ci.org/subchen/go-cli.svg?branch=master)](https://travis-ci.org/subchen/go-cli)
+[![Coverage Status](https://coveralls.io/repos/github/subchen/go-cli/badge.svg?branch=master)](https://coveralls.io/github/subchen/go-cli?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/subchen/go-cli)](https://goreportcard.com/report/github.com/subchen/go-cli)
 [![License](http://img.shields.io/badge/License-Apache_2-red.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -15,7 +16,8 @@ Some applications are built using `go-cli` including:
 - [ovfenv-installer](https://github.com/subchen/ovfenv-installer)
 - [publish-toolset](https://github.com/subchen/publish-toolset)
 
-Table of Contents
+
+**Table of Contents**
 
 - [Installation](#overview)
 - [Syntax for Command Line](#syntax-for-command-line)
@@ -427,19 +429,25 @@ The default version flag (`--version`) is defined in `cli.App`.
 app := cli.NewApp()
 app.Name = "hello"
 app.Version = "1.0.0"
-app.BuildGitCommit = "320279c1a9a6537cdfd1e526063f6a748bb1fec3"
-app.BuildDate = "Sat May 13 19:53:08 UTC 2017"
+app.BuildInfo = &cli.BuildInfo{
+    GitBranch:   "master",
+    GitCommit:   "320279c1a9a6537cdfd1e526063f6a748bb1fec3",
+    GitRevCount: "1234",
+    Timestamp:   "Sat May 13 19:53:08 UTC 2017",
+}
 app.Run(os.Args)
 ```
 
-Then, `hello --version` results like:
+Then, `./hello --version` results like:
 
 ```bash
 Name:       hello
 Version:    1.0.0
-Go version: go1.8.1
+Patches:    1234
+Git branch: master
 Git commit: 320279c1a9a6537cdfd1e526063f6a748bb1fec3
 Built:      Sat May 13 19:53:08 UTC 2017
+Go version: go1.8.1
 OS/Arch:    darwin/amd64
 ```
 

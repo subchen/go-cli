@@ -23,8 +23,7 @@ type App struct {
 	Examples string
 
 	// build information, show in --version
-	BuildGitCommit string
-	BuildDate      string
+	BuildInfo *BuildInfo
 
 	// List of flags to parse
 	Flags []*Flag

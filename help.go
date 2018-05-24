@@ -271,12 +271,18 @@ func showHelp(c *HelpContext) {
 func showVersion(app *App) {
 	fmt.Printf("Name:       %s\n", app.Name)
 	fmt.Printf("Version:    %s\n", app.Version)
+	if app.BuildInfo.GitRevCount != "" {
+		fmt.Printf("Patches:    %s\n", app.BuildInfo.GitRevCount)
+	}
+	if app.BuildInfo.GitBranch != "" {
+		fmt.Printf("Git branch: %s\n", app.BuildInfo.GitBranch)
+	}
+	if app.BuildInfo.GitCommit != "" {
+		fmt.Printf("Git commit: %s\n", app.BuildInfo.GitCommit)
+	}
+	if app.BuildInfo.Timestamp != "" {
+		fmt.Printf("Built:      %s\n", app.BuildInfo.Timestamp)
+	}
 	fmt.Printf("Go version: %s\n", runtime.Version())
-	if app.BuildGitCommit != "" {
-		fmt.Printf("Git commit: %s\n", app.BuildGitCommit)
-	}
-	if app.BuildDate != "" {
-		fmt.Printf("Built:      %s\n", app.BuildDate)
-	}
 	fmt.Printf("OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
 }
