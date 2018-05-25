@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"runtime"
 	"strings"
@@ -48,6 +49,9 @@ EXAMPLES:
 Run '{{.Name}} COMMAND --help' for more information on a command.{{end}}
 
 `
+
+// helpWriter variable for testing hook
+var helpWriter io.Writer = os.Stdout
 
 // HelpContext is a struct for output help
 type HelpContext struct {
@@ -271,27 +275,27 @@ func showHelp(c *HelpContext) {
 	if err != nil {
 		panic(err)
 	}
-	err = tmpl.Execute(os.Stdout, c)
+	err = tmpl.Execute(helpWriter, c)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func showVersion(app *App) {
-	fmt.Printf("Name:       %s\n", app.Name)
-	fmt.Printf("Version:    %s\n", app.Version)
+	fmt.Fprintf(helpWriter, "Name:       %s\n", app.Name)
+	fmt.Fprintf(helpWriter, "Version:    %s\n", app.Version)
 	if app.BuildInfo.GitRevCount != "" {
-		fmt.Printf("Patches:    %s\n", app.BuildInfo.GitRevCount)
+		fmt.Fprintf(helpWriter, "Patches:    %s\n", app.BuildInfo.GitRevCount)
 	}
 	if app.BuildInfo.GitBranch != "" {
-		fmt.Printf("Git branch: %s\n", app.BuildInfo.GitBranch)
+		fmt.Fprintf(helpWriter, "Git branch: %s\n", app.BuildInfo.GitBranch)
 	}
 	if app.BuildInfo.GitCommit != "" {
-		fmt.Printf("Git commit: %s\n", app.BuildInfo.GitCommit)
+		fmt.Fprintf(helpWriter, "Git commit: %s\n", app.BuildInfo.GitCommit)
 	}
 	if app.BuildInfo.Timestamp != "" {
-		fmt.Printf("Built:      %s\n", app.BuildInfo.Timestamp)
+		fmt.Fprintf(helpWriter, "Built:      %s\n", app.BuildInfo.Timestamp)
 	}
-	fmt.Printf("Go version: %s\n", runtime.Version())
-	fmt.Printf("OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
+	fmt.Fprintf(helpWriter, "Go version: %s\n", runtime.Version())
+	fmt.Fprintf(helpWriter, "OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
 }
