@@ -34,7 +34,7 @@ func (c *Context) Parent() *Context {
 	return c.parent
 }
 
-// Parent returns top context if exists
+// Global returns top context if exists
 func (c *Context) Global() *Context {
 	ctx := c
 	for {
@@ -84,7 +84,7 @@ func (c *Context) GetBool(name string) bool {
 	return false
 }
 
-// GetBool returns flag value as bool
+// GetInt returns flag value as int
 func (c *Context) GetInt(name string) int {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -168,7 +168,7 @@ func (c *Context) GetUint8(name string) uint8 {
 	return 0
 }
 
-// GetBool returns flag value as bool
+// GetUint16 returns flag value as uint16
 func (c *Context) GetUint16(name string) uint16 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
@@ -192,7 +192,7 @@ func (c *Context) GetUint32(name string) uint32 {
 	return 0
 }
 
-// GetBool returns flag value as bool
+// GetUint64 returns flag value as uint64
 func (c *Context) GetUint64(name string) uint64 {
 	f := lookupFlag(c.flags, name)
 	if f != nil {
