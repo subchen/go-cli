@@ -139,7 +139,7 @@ func (f *Flag) Names() []string {
 	return names
 }
 
-// Set sets the value of the named flag
+// SetValue sets the value of the named flag
 func (f *Flag) SetValue(value string) error {
 	f.visited = true
 	return f.wrapValue.Set(value)
