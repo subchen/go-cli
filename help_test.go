@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bytes"
 	"testing"
 )
 
@@ -15,6 +16,9 @@ func TestHelpShowVersion(t *testing.T) {
 			GitRevCount: "1234",
 		},
 	}
+
+	// reset
+	helpWriter = new(bytes.Buffer)
 
 	showVersion(app)
 }
@@ -55,6 +59,9 @@ func TestHelpShowHelp(t *testing.T) {
 			Usage: "release project",
 		},
 	}
+
+	// reset
+	helpWriter = new(bytes.Buffer)
 
 	ctx1 := newAppHelpContext("app", app)
 	showHelp(ctx1)
