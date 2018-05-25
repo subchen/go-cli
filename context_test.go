@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestContext(t *testing.T) {
+func TestContextGet(t *testing.T) {
 	c := &Context{
 		flags: []*Flag{
 			{Name: "f1"},
@@ -82,5 +82,33 @@ func TestContext(t *testing.T) {
 	// GetStringSlice
 	if got := c.GetStringSlice("f3"); !reflect.DeepEqual(got, []string{"a", "b"}) {
 		t.Errorf("f3 GetStringSlice is wrong, got: %v", got)
+	}
+}
+
+func TestContextArg(t *testing.T) {
+	c := &Context{
+		args: []string{"a", "b", "c"},
+	}
+
+	if c.NArg() != 3 {
+		t.Error("NArg() != 3")
+	}
+	if c.Arg(0) != "a" {
+		t.Error("Arg(0) != 'a'")
+	}
+	if !reflect.DeepEqual(c.Args(), c.args) {
+		t.Error("Args() is wrong")
+	}
+}
+
+func TestContextParent(t *testing.T) {
+	p := &Context{name: "p"}
+	c := &Context{parent: p}
+
+	if c.Parent().Name() != "p" {
+		t.Error("Parent() is wrong")
+	}
+	if c.Global().Name() != "p" {
+		t.Error("Global() is wrong")
 	}
 }

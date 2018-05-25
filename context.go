@@ -7,6 +7,9 @@ import (
 	"strings"
 )
 
+// exit variable for tesing hook
+var exit = os.Exit
+
 // Context is a type that is passed through to
 // each Handler action in a cli application. Context
 // can be used to retrieve context-specific Args and
@@ -252,7 +255,7 @@ func (c *Context) ShowHelp() {
 // ShowHelpAndExit shows help and exit
 func (c *Context) ShowHelpAndExit(code int) {
 	c.ShowHelp()
-	os.Exit(code)
+	exit(code)
 }
 
 // ShowError shows error and exit(1)
@@ -260,7 +263,7 @@ func (c *Context) ShowError(err error) {
 	w := os.Stderr
 	fmt.Fprintln(w, err)
 	fmt.Fprintln(w, fmt.Sprintf("\nRun '%s --help' for more information", c.name))
-	os.Exit(1)
+	exit(1)
 }
 
 func (c *Context) handlePanic() {
@@ -274,6 +277,6 @@ func (c *Context) handlePanic() {
 		} else {
 			os.Stderr.WriteString(fmt.Sprintf("fatal: %v\n", e))
 		}
-		os.Exit(1)
+		exit(1)
 	}
 }

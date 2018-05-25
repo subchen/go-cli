@@ -47,7 +47,7 @@ type App struct {
 	OnCommandNotFound func(*Context, string)
 
 	// Handler if panic in app.Action() and command.Action()
-	OnActionPanic func(c *Context, err error)
+	OnActionPanic func(*Context, error)
 }
 
 // NewApp creates a new cli Application
