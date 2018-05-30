@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/subchen/go-cli.svg?branch=master)](https://travis-ci.org/subchen/go-cli)
 [![Coverage Status](https://coveralls.io/repos/github/subchen/go-cli/badge.svg?branch=master)](https://coveralls.io/github/subchen/go-cli?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/subchen/go-cli)](https://goreportcard.com/report/github.com/subchen/go-cli)
+[![Release](https://img.shields.io/github/release/subchen/go-cli.svg)](https://github.com/subchen/go-cli/releases/latest)
 [![License](http://img.shields.io/badge/License-Apache_2-red.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 `go-cli` is a package to build a CLI application. Support command/sub-commands.
@@ -512,5 +513,5 @@ app.Run(os.Args)
 
 ## License
 
-`go-cli` is released under the Apache 2.0 license. See [LICENSE](https://github.com/subchen/go-cli/blob/master/LICENSE)
+Apache 2.0 license. See [LICENSE](https://github.com/subchen/go-cli/blob/master/LICENSE)
 
