@@ -470,7 +470,7 @@ app.Run(os.Args)
 
 ### OnCommandNotFound
 
-`go-cli` provides `OnCommandNotFound` func to handle a error if command/sub-command is not found.
+`go-cli` provides `OnCommandNotFound` func to handle an error if command/sub-command is not found.
 
 ```go
 app := cli.NewApp()
