@@ -17,6 +17,8 @@ type Command struct {
 	Description string
 	// Examples of the program
 	Examples string
+	// SeeAlso of the program
+	SeeAlso string
 
 	// List of flags to parse
 	Flags []*Flag
