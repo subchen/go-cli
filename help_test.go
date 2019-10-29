@@ -53,6 +53,7 @@ func TestHelpShowHelp(t *testing.T) {
 					IsBool: true,
 				},
 			},
+			SeeAlso: "https://github.com/subchen/go-cli#build\nhttps://github.com/subchen/go-cli#build2",
 		},
 		{
 			Name:  "release",

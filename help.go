@@ -44,7 +44,7 @@ COMMANDS:
 EXAMPLES:
 {{- range .ExampleLines}}
    {{.}}
-{{- end}}{{end}}{{if .SeeAlsoLines }}
+{{- end}}{{end}}{{if .SeeAlsoLines}}
 
 SEE ALSO:
 {{- range .SeeAlsoLines}}
@@ -94,6 +94,7 @@ func newCommandHelpContext(name string, cmd *Command, app *App) *HelpContext {
 		UsageText:   cmd.UsageText,
 		Description: cmd.Description,
 		Examples:    cmd.Examples,
+		SeeAlso:     cmd.SeeAlso,
 		Flags:       cmd.Flags,
 		Commands:    cmd.Commands,
 	}
@@ -180,6 +181,7 @@ func (c *HelpContext) ExampleLines() []string {
 	return examples
 }
 
+// SeeAlsoLines splits line for see also
 func (c *HelpContext) SeeAlsoLines() []string {
 	c.SeeAlso = strings.TrimSpace(c.SeeAlso)
 	if len(c.SeeAlso) == 0 {
