@@ -390,7 +390,7 @@ func main() {
         },
     }
 
-	app.SeeAlso = `https://github.com/subchen/go-cli
+    app.SeeAlso = `https://github.com/subchen/go-cli
 https://github.com/subchen/go-cli/wiki`
 
     app.Run(os.Args)
