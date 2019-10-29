@@ -44,7 +44,7 @@ COMMANDS:
 EXAMPLES:
 {{- range .ExampleLines}}
    {{.}}
-{{- end}}{{end}}{{if .SeeAlso }}
+{{- end}}{{end}}{{if .SeeAlsoLines }}
 
 SEE ALSO:
 {{- range .SeeAlsoLines}}
@@ -301,24 +301,24 @@ func showHelp(c *HelpContext) {
 }
 
 func showVersion(app *App) {
-	_, _ = fmt.Fprintf(helpWriter, "Name:       %s\n", app.Name)
-	_, _ = fmt.Fprintf(helpWriter, "Version:    %s\n", app.Version)
+	fmt.Fprintf(helpWriter, "Name:       %s\n", app.Name)
+	fmt.Fprintf(helpWriter, "Version:    %s\n", app.Version)
 
-	if app.BuildInfo != nil {
-		if app.BuildInfo.GitRevCount != "" {
-			_, _ = fmt.Fprintf(helpWriter, "Patches:    %s\n", app.BuildInfo.GitRevCount)
+	if build := app.BuildInfo; build != nil {
+		if build.GitRevCount != "" {
+			fmt.Fprintf(helpWriter, "Patches:    %s\n", build.GitRevCount)
 		}
-		if app.BuildInfo.GitBranch != "" {
-			_, _ = fmt.Fprintf(helpWriter, "Git branch: %s\n", app.BuildInfo.GitBranch)
+		if build.GitBranch != "" {
+			fmt.Fprintf(helpWriter, "Git branch: %s\n", build.GitBranch)
 		}
-		if app.BuildInfo.GitCommit != "" {
-			_, _ = fmt.Fprintf(helpWriter, "Git commit: %s\n", app.BuildInfo.GitCommit)
+		if build.GitCommit != "" {
+			fmt.Fprintf(helpWriter, "Git commit: %s\n", build.GitCommit)
 		}
-		if app.BuildInfo.Timestamp != "" {
-			_, _ = fmt.Fprintf(helpWriter, "Built:      %s\n", app.BuildInfo.Timestamp)
+		if build.Timestamp != "" {
+			fmt.Fprintf(helpWriter, "Built:      %s\n", build.Timestamp)
 		}
 	}
 
-	_, _ = fmt.Fprintf(helpWriter, "Go version: %s\n", runtime.Version())
-	_, _ = fmt.Fprintf(helpWriter, "OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
+	fmt.Fprintf(helpWriter, "Go version: %s\n", runtime.Version())
+	fmt.Fprintf(helpWriter, "OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
 }
