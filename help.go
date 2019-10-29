@@ -44,6 +44,11 @@ COMMANDS:
 EXAMPLES:
 {{- range .ExampleLines}}
    {{.}}
+{{- end}}{{end}}{{if .SeeAlso }}
+
+SEE ALSO:
+{{- range .SeeAlsoLines}}
+   {{.}}
 {{- end}}{{end}}{{if .VisibleCommands}}
 
 Run '{{.Name}} COMMAND --help' for more information on a command.{{end}}
@@ -62,6 +67,7 @@ type HelpContext struct {
 	Description string
 	Authors     string
 	Examples    string
+	SeeAlso     string
 	Flags       []*Flag
 	Commands    []*Command
 }
@@ -75,6 +81,7 @@ func newAppHelpContext(name string, app *App) *HelpContext {
 		Description: app.Description,
 		Authors:     app.Authors,
 		Examples:    app.Examples,
+		SeeAlso:     app.SeeAlso,
 		Flags:       app.Flags,
 		Commands:    app.Commands,
 	}
@@ -171,6 +178,18 @@ func (c *HelpContext) ExampleLines() []string {
 		examples[i] = strings.TrimSpace(example)
 	}
 	return examples
+}
+
+func (c *HelpContext) SeeAlsoLines() []string {
+	c.SeeAlso = strings.TrimSpace(c.SeeAlso)
+	if len(c.SeeAlso) == 0 {
+		return nil
+	}
+	seeAlso := strings.Split(c.SeeAlso, "\n")
+	for i, example := range seeAlso {
+		seeAlso[i] = strings.TrimSpace(example)
+	}
+	return seeAlso
 }
 
 // VisibleFlagsUsageLines splits line for flags
@@ -282,20 +301,24 @@ func showHelp(c *HelpContext) {
 }
 
 func showVersion(app *App) {
-	fmt.Fprintf(helpWriter, "Name:       %s\n", app.Name)
-	fmt.Fprintf(helpWriter, "Version:    %s\n", app.Version)
-	if app.BuildInfo.GitRevCount != "" {
-		fmt.Fprintf(helpWriter, "Patches:    %s\n", app.BuildInfo.GitRevCount)
+	_, _ = fmt.Fprintf(helpWriter, "Name:       %s\n", app.Name)
+	_, _ = fmt.Fprintf(helpWriter, "Version:    %s\n", app.Version)
+
+	if app.BuildInfo != nil {
+		if app.BuildInfo.GitRevCount != "" {
+			_, _ = fmt.Fprintf(helpWriter, "Patches:    %s\n", app.BuildInfo.GitRevCount)
+		}
+		if app.BuildInfo.GitBranch != "" {
+			_, _ = fmt.Fprintf(helpWriter, "Git branch: %s\n", app.BuildInfo.GitBranch)
+		}
+		if app.BuildInfo.GitCommit != "" {
+			_, _ = fmt.Fprintf(helpWriter, "Git commit: %s\n", app.BuildInfo.GitCommit)
+		}
+		if app.BuildInfo.Timestamp != "" {
+			_, _ = fmt.Fprintf(helpWriter, "Built:      %s\n", app.BuildInfo.Timestamp)
+		}
 	}
-	if app.BuildInfo.GitBranch != "" {
-		fmt.Fprintf(helpWriter, "Git branch: %s\n", app.BuildInfo.GitBranch)
-	}
-	if app.BuildInfo.GitCommit != "" {
-		fmt.Fprintf(helpWriter, "Git commit: %s\n", app.BuildInfo.GitCommit)
-	}
-	if app.BuildInfo.Timestamp != "" {
-		fmt.Fprintf(helpWriter, "Built:      %s\n", app.BuildInfo.Timestamp)
-	}
-	fmt.Fprintf(helpWriter, "Go version: %s\n", runtime.Version())
-	fmt.Fprintf(helpWriter, "OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
+
+	_, _ = fmt.Fprintf(helpWriter, "Go version: %s\n", runtime.Version())
+	_, _ = fmt.Fprintf(helpWriter, "OS/Arch:    %s/%v\n", runtime.GOOS, runtime.GOARCH)
 }

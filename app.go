@@ -22,6 +22,8 @@ type App struct {
 	Authors string
 	// Examples of the program
 	Examples string
+	// SeeAlso of the program
+	SeeAlso string
 
 	// build information, show in --version
 	BuildInfo *BuildInfo

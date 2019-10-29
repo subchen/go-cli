@@ -60,6 +60,9 @@ func TestHelpShowHelp(t *testing.T) {
 		},
 	}
 
+	app.SeeAlso = `https://github.com/subchen
+https://github.com/yingzhuo`
+
 	// reset
 	helpWriter = new(bytes.Buffer)
 
