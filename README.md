@@ -51,7 +51,7 @@ Some applications are built using `go-cli` including:
 To install `go-cli`, simply run:
 
 ```bash
-go get github.com/subchen/go-cli
+go get github.com/subchen/go-cli/v3
 ```
 
 ## Syntax for Command Line
@@ -90,7 +90,7 @@ package main
 import (
     "fmt"
     "os"
-    "github.com/subchen/go-cli"
+    "github.com/subchen/go-cli/v3"
 )
 
 func main() {
@@ -359,7 +359,7 @@ import (
     "fmt"
     "os"
     "strings"
-    "github.com/subchen/go-cli"
+    "github.com/subchen/go-cli/v3"
 )
 
 func main() {
